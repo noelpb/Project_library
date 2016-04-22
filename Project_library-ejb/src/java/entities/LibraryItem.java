@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,10 +23,13 @@ public class LibraryItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToOne
     private BookItem bookId;
     private int count;
     private Boolean availability;
+    @OneToOne
     private WaitingListItem waitingList;
+    @OneToOne
     private Users currentUser;
 
     public LibraryItem() {

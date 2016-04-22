@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,11 +24,11 @@ public class BookItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-private String writer;
-private int pages;
-private String ISBN;
-private int number; 
-private int publicationYear;
+    @ManyToMany
+    private AuthorItem writer;
+    private int pages;
+    private String ISBN;
+    private int publicationYear;
 
     public int getPublicationYear() {
         return publicationYear;
@@ -42,7 +44,7 @@ private int publicationYear;
         this.writer = writer;
         this.pages = pages;
         this.ISBN = ISBN;
-        this.number = number;
+       
         this.publicationYear = year;
     }
 
@@ -76,14 +78,6 @@ private int publicationYear;
 
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public Long getId() {

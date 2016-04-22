@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -21,20 +23,21 @@ class WaitingListItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int usrId;
-    private int bookId;
+    @OneToMany
+    private Users usrId;
+    
 
-    public WaitingListItem(Long id, int usrId) {
+    public WaitingListItem(Long id, Users usrId) {
         this.id = id;
         this.usrId = usrId;
         
     }
 
-    public int getUsrId() {
+    public Users getUsrId() {
         return usrId;
     }
 
-    public void setUsrId(int usrId) {
+    public void setUsrId(Users usrId) {
         this.usrId = usrId;
     }
     public Long getId() {
