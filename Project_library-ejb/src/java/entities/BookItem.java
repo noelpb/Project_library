@@ -38,7 +38,7 @@ public class BookItem implements Serializable {
         this.publicationYear = publicationYear;
     }
 
-    public BookItem(Long id, String name, String writer, int pages, String ISBN, int number, int year) {
+    public BookItem(Long id, String name, AuthorItem writer, int pages, String ISBN, int year) {
         this.id = id;
         this.name = name;
         this.writer = writer;
@@ -56,11 +56,11 @@ public class BookItem implements Serializable {
         this.name = name;
     }
 
-    public String getWriter() {
+    public AuthorItem getWriter() {
         return writer;
     }
 
-    public void setWriter(String writer) {
+    public void setWriter(AuthorItem writer) {
         this.writer = writer;
     }
 
