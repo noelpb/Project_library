@@ -5,29 +5,37 @@
  */
 package book;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  *
  * @author Nudista
  */
-public class Book {
-    
-private String name;
+@Entity
+public class BookItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String name;
 private String writer;
 private int pages;
 private String ISBN;
 private int number;
 private int year;
 
-    public Book(String name, String writer, int pages, String ISBN, int number, int year) {
+    public BookItem(Long id, String name, String writer, int pages, String ISBN, int number, int year) {
+        this.id = id;
         this.name = name;
         this.writer = writer;
         this.pages = pages;
         this.ISBN = ISBN;
         this.number = number;
         this.year = year;
-    }
-
-    public Book() {
     }
 
     public String getName() {
@@ -78,11 +86,39 @@ private int year;
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return name + ";" + writer + ";" + pages + ";" + ISBN + ";" + number + ";" + year;
+
+
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof BookItem)) {
+            return false;
+        }
+        BookItem other = (BookItem) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "book.BookItem[ id=" + id + " ]";
+    }
     
 }
