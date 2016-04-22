@@ -5,7 +5,7 @@
  */
 package library;
 
-import book.Book;
+import book.BookItem;
 import javax.ejb.Local;
 
 /**
@@ -15,9 +15,9 @@ import javax.ejb.Local;
 @Local
 interface LocalLibSessionBean {
     
-    boolean addProductToCart(Book b);
+    boolean addProductToCart(BookItem b);
 
-    boolean removeProductFromCart(Book b);
+    boolean removeProductFromCart(BookItem b);
     
     boolean checkOut();
    

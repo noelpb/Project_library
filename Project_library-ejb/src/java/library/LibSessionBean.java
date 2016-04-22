@@ -6,7 +6,7 @@
 package library;
 
 
-import book.Book;
+import book.BookItem;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 
@@ -19,12 +19,12 @@ import javax.ejb.Stateful;
 public class LibSessionBean implements LocalLibSessionBean{
 
     @Override
-    public boolean addProductToCart(Book b) {
+    public boolean addProductToCart(BookItem b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean removeProductFromCart(Book b) {
+    public boolean removeProductFromCart(BookItem b) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
