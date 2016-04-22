@@ -26,7 +26,15 @@ private String writer;
 private int pages;
 private String ISBN;
 private int number; 
-private int year;
+private int publicationYear;
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
 
     public BookItem(Long id, String name, String writer, int pages, String ISBN, int number, int year) {
         this.id = id;
@@ -35,7 +43,7 @@ private int year;
         this.pages = pages;
         this.ISBN = ISBN;
         this.number = number;
-        this.year = year;
+        this.publicationYear = year;
     }
 
     public String getName() {
@@ -77,16 +85,6 @@ private int year;
     public void setNumber(int number) {
         this.number = number;
     }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-
 
     public Long getId() {
         return id;

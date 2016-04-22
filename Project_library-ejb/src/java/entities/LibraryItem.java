@@ -30,7 +30,7 @@ public class LibraryItem implements Serializable {
     public LibraryItem() {
     }
 
-    public LibraryItem(Long id, int count, Boolean availability, WaitingListItem waitingList, Users currentUser) {
+      public LibraryItem(Long id, int count, Boolean availability, WaitingListItem waitingList, Users currentUser) {
         this.id = id;
         this.count = count;
         this.availability = availability;
