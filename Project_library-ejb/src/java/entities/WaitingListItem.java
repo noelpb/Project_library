@@ -22,10 +22,12 @@ class WaitingListItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int usrId;
+    private int bookId;
 
     public WaitingListItem(Long id, int usrId) {
         this.id = id;
         this.usrId = usrId;
+        
     }
 
     public int getUsrId() {
