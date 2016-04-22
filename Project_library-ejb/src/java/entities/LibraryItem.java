@@ -26,6 +26,46 @@ public class LibraryItem implements Serializable {
     private Boolean availability;
     private WaitingListItem waitingList;
     private Users currentUser;
+
+    public LibraryItem(Long id, int count, Boolean availability, WaitingListItem waitingList, Users currentUser) {
+        this.id = id;
+        this.count = count;
+        this.availability = availability;
+        this.waitingList = waitingList;
+        this.currentUser = currentUser;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Boolean getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Boolean availability) {
+        this.availability = availability;
+    }
+
+    public WaitingListItem getWaitingList() {
+        return waitingList;
+    }
+
+    public void setWaitingList(WaitingListItem waitingList) {
+        this.waitingList = waitingList;
+    }
+
+    public Users getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(Users currentUser) {
+        this.currentUser = currentUser;
+    }
     
     public Long getId() {
         return id;
