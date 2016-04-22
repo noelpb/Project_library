@@ -27,6 +27,9 @@ public class LibraryItem implements Serializable {
     private WaitingListItem waitingList;
     private Users currentUser;
 
+    public LibraryItem() {
+    }
+
     public LibraryItem(Long id, int count, Boolean availability, WaitingListItem waitingList, Users currentUser) {
         this.id = id;
         this.count = count;
