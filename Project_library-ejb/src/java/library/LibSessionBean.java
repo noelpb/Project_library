@@ -6,7 +6,7 @@
 package library;
 
 
-import book.BookItem;
+import entities.BookItem;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 
