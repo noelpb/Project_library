@@ -6,10 +6,16 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -17,6 +23,8 @@ import javax.persistence.OneToOne;
  * @author Noel
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "countLibItems", query = "SELECT COUNT(b) FROM LibraryItem b")})
 public class LibraryItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,23 +32,32 @@ public class LibraryItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    private BookItem bookId;
+    @JoinColumn(name = "isbn_fk")
+    private BookItem bookISBN;
     private int count;
     private Boolean availability;
     @OneToOne
+    @JoinColumn(name = "id_fk")
     private WaitingListItem waitingList;
-    @OneToOne
-    private Users currentUser;
+    @ManyToMany
+    @JoinTable(name = "jnd_lib_order", joinColumns = @JoinColumn(name = "lib_fk"), inverseJoinColumns = @JoinColumn(name = "oder_fk"))
+    private List<Orders> orders;
 
     public LibraryItem() {
     }
 
-      public LibraryItem(Long id, int count, Boolean availability, WaitingListItem waitingList, Users currentUser) {
-        this.id = id;
+    public LibraryItem(BookItem ISBN, int count) {
+        this.bookISBN = ISBN;
+        this.count = count;
+        this.availability = true;
+        this.waitingList = null;
+    }
+
+    public LibraryItem(BookItem ISBN, int count, Boolean availability, WaitingListItem waitingList) {
+        this.bookISBN = ISBN;
         this.count = count;
         this.availability = availability;
         this.waitingList = waitingList;
-        this.currentUser = currentUser;
     }
 
     public int getCount() {
@@ -67,14 +84,6 @@ public class LibraryItem implements Serializable {
         this.waitingList = waitingList;
     }
 
-    public Users getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(Users currentUser) {
-        this.currentUser = currentUser;
-    }
-    
     public Long getId() {
         return id;
     }
@@ -107,5 +116,5 @@ public class LibraryItem implements Serializable {
     public String toString() {
         return "entities.LibraryItem[ id=" + id + " ]";
     }
-    
+
 }

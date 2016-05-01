@@ -6,11 +6,18 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,36 +25,53 @@ import javax.persistence.OneToOne;
  * @author Nudista
  */
 @Entity
+@NamedQueries({
+@NamedQuery(name = "countBooks", query = "SELECT COUNT(b) FROM BookItem b")})
 public class BookItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToMany
-    private AuthorItem writer;
+    @ManyToMany(mappedBy="book")
+    private List<AuthorItem> writer;
     private int pages;
+    @OneToOne(mappedBy="bookISBN")
+    private LibraryItem libItem;
     private String ISBN;
-    private int publicationYear;
+    @Enumerated(EnumType.STRING)
+   private Genre genre;
 
-    public int getPublicationYear() {
-        return publicationYear;
+    public BookItem() {
     }
 
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public BookItem(Long id, String name, AuthorItem writer, int pages, String ISBN, int year) {
-        this.id = id;
+    public BookItem(String name, int pages, String ISBN, Genre genre) {
         this.name = name;
-        this.writer = writer;
         this.pages = pages;
         this.ISBN = ISBN;
-       
-        this.publicationYear = year;
+        this.genre = genre;
+        this.writer = new ArrayList<>();
     }
 
+    
+
+    public List<AuthorItem> getWriter() {
+        return writer;
+    }
+
+    public void setWriter(List<AuthorItem> writer) {
+        this.writer = writer;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+          
     public String getName() {
         return name;
     }
@@ -56,13 +80,7 @@ public class BookItem implements Serializable {
         this.name = name;
     }
 
-    public AuthorItem getWriter() {
-        return writer;
-    }
-
-    public void setWriter(AuthorItem writer) {
-        this.writer = writer;
-    }
+    
 
     public int getPages() {
         return pages;
@@ -107,10 +125,12 @@ public class BookItem implements Serializable {
         }
         return true;
     }
+    
 
     @Override
     public String toString() {
-        return "book.BookItem[ id=" + id + " ]";
+        return "book.BookItem[ id=" + name + " ]";
     }
+    
     
 }

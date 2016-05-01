@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package book;
+package entities;
 
 /**
  *
- * @author Noel
+ * @author Nudista
  */
-public class book {
-    
+public enum Genre {
+COMEDY,
+DRAMA,
+NONFICTION,
+NOVEL,
+FICTION,
+SATIRE,
+TRAGEDY
+
+
 }
