@@ -24,7 +24,9 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "countLibItems", query = "SELECT COUNT(b) FROM LibraryItem b")})
+    @NamedQuery(name = "countLibItems", query = "SELECT COUNT(b) FROM LibraryItem b"),
+    @NamedQuery(name = "selectAll", query = "SELECT l FROM LibraryItem AS l")
+})
 public class LibraryItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,6 +94,22 @@ public class LibraryItem implements Serializable {
         this.id = id;
     }
 
+    public BookItem getBookISBN() {
+        return bookISBN;
+    }
+
+    public void setBookISBN(BookItem bookISBN) {
+        this.bookISBN = bookISBN;
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -114,7 +132,7 @@ public class LibraryItem implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.LibraryItem[ id=" + id + " ]";
+        return id + ";" + count + ";" + availability + ";" + bookISBN.getName() + ";" + bookISBN.getName() + ";" + bookISBN.getGenre();
     }
 
 }

@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package beans;
 
-import entities.BookItem;
 import javax.ejb.Local;
 
 /**
@@ -13,12 +12,6 @@ import javax.ejb.Local;
  * @author Nudista
  */
 @Local
-interface LocalLibSessionBean {
+public interface CustomerBeanLocal {
     
-    boolean addProductToCart(BookItem b);
-
-    boolean removeProductFromCart(BookItem b);
-    
-    boolean checkOut();
-   
 }

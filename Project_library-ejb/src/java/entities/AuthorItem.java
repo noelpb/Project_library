@@ -28,7 +28,7 @@ public class AuthorItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    //@Column(unique = true)
+    @Column(unique = true)
     private String name;
     @ManyToMany
     @JoinTable(name = "jnd_author_book", joinColumns = @JoinColumn(name = "author_fk"), inverseJoinColumns = @JoinColumn(name = "book_fk"))

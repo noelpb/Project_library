@@ -6,7 +6,8 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -35,22 +37,26 @@ public class Orders implements Serializable {
     private Long id;
     @ManyToOne
     @JoinTable(name = "jnd_oder_user", joinColumns = @JoinColumn(name = "order_fk"), inverseJoinColumns = @JoinColumn(name = "user_fk"))
-    private Users emailU;
+    private Users user;
     @ManyToMany(mappedBy = "orders")
     private List<LibraryItem> libItem;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date endDate;
     private boolean openOrder;
 
     public Orders() {
+        startDate = new Date();
+        endDate = this.addDays(startDate, 30);
     }
 
-    public Users getEmailU() {
-        return emailU;
+    public Users getUser() {
+        return user;
     }
 
-    public void setEmailU(Users emailU) {
-        this.emailU = emailU;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public List<LibraryItem> getLibItem() {
@@ -91,6 +97,13 @@ public class Orders implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    final Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 
     @Override

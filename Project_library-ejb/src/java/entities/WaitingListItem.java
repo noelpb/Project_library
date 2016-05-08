@@ -26,22 +26,26 @@ class WaitingListItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    //@OneToMany(mappedBy = "email")
-  //  private List<Users> user;
+    @OneToMany
+    @JoinColumn(name = "user_fk")
+    private List<Users> userWL;
     @OneToOne(mappedBy = "waitingList")
     private LibraryItem libId;
 
-  /*  public WaitingListItem(List<Users> user) {
-        this.user = user;
+    public WaitingListItem() {
+    }
+    
+    public WaitingListItem(List<Users> user) {
+        this.userWL = user;
     }
 
     public List<Users> getUser() {
-        return user;
+        return userWL;
     }
 
     public void setUser(List<Users> user) {
-        this.user = user;
-    }*/
+        this.userWL = user;
+    }
 
     public LibraryItem getLibId() {
         return libId;

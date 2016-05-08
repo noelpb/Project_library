@@ -26,21 +26,23 @@ import javax.persistence.OneToOne;
  */
 @Entity
 @NamedQueries({
-@NamedQuery(name = "countBooks", query = "SELECT COUNT(b) FROM BookItem b")})
+    @NamedQuery(name = "countBooks", query = "SELECT COUNT(b) FROM BookItem b")})
 public class BookItem implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @ManyToMany(mappedBy="book")
+    @ManyToMany(mappedBy = "book")
     private List<AuthorItem> writer;
     private int pages;
-    @OneToOne(mappedBy="bookISBN")
+    @OneToOne(mappedBy = "bookISBN")
     private LibraryItem libItem;
+    @Column(unique = true)
     private String ISBN;
     @Enumerated(EnumType.STRING)
-   private Genre genre;
+    private Genre genre;
 
     public BookItem() {
     }
@@ -53,12 +55,11 @@ public class BookItem implements Serializable {
         this.writer = new ArrayList<>();
     }
 
-    
-
     public List<AuthorItem> getWriter() {
         return writer;
     }
-
+    
+     
     public void setWriter(List<AuthorItem> writer) {
         this.writer = writer;
     }
@@ -71,7 +72,6 @@ public class BookItem implements Serializable {
         this.genre = genre;
     }
 
-          
     public String getName() {
         return name;
     }
@@ -79,8 +79,6 @@ public class BookItem implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    
 
     public int getPages() {
         return pages;
@@ -106,6 +104,14 @@ public class BookItem implements Serializable {
         this.id = id;
     }
 
+    public String writersToString() {
+        String result = "";
+        for (AuthorItem authorItem : writer) {
+            result = result + ";" + authorItem.getName();
+        }
+        return result;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -125,12 +131,10 @@ public class BookItem implements Serializable {
         }
         return true;
     }
-    
 
     @Override
     public String toString() {
         return "book.BookItem[ id=" + name + " ]";
     }
-    
-    
+
 }

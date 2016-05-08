@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package beans;
 
 import entities.Genre;
+import java.util.Date;
 import javax.ejb.Local;
 
 /**
@@ -15,6 +16,11 @@ import javax.ejb.Local;
 @Local
 public interface StaffSesBeanLocal {
 
-    
-   public boolean addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname); 
+    public void addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname);
+
+    public void addUser(String name, String surname, String mail, String pass);
+
+    void closeOrder(String user, Date orderDate);
+
+    String getPassword(String usermail);
 }

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package beans;
 
 import entities.LibraryItem;
-import entities.Users;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,12 +14,14 @@ import javax.ejb.Local;
  * @author Nudista
  */
 @Local
-public interface LibDirectorLocal {
+public interface findBookBeanLocal {
 
-    boolean deleteBook(LibraryItem parameter);
+   List<LibraryItem> findISBN(String ISBN);
+   List<LibraryItem> findName(String book);
+   List<LibraryItem> findAuthor(String author);
 
-    void addUser(Users user);
+    List<LibraryItem> findGenre(String genre);
 
-    boolean deleteUser(Users user);
+    List<LibraryItem> selectAll();
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package library;
+package beans;
 
 import javax.ejb.Local;
 
@@ -12,16 +12,13 @@ import javax.ejb.Local;
  * @author Nudista
  */
 @Local
-public interface InfoDatabseLocal {
+public interface LibDirectorLocal {
 
-    String getDatabaseInfo();
+    void addAdminUser(String name, String surname, String mail, String pass, boolean admin);
 
-    String getInfoUsers();
+    void deleteBook(String ISBN);
 
-    String getInfoOrders();
+    void changeCountBooks(String ISBN, int count);
 
-    String getInfoBooks();
-
-    String test();
     
 }
