@@ -91,7 +91,7 @@
 
                     <td>
                         <form action="./staff" method="get">
-                            <h2>Add new user</h2>
+                            <h2>Edit user</h2>
                             <hr  width="50%" align="left"/>
                             <table>
                                 <tr>
@@ -112,6 +112,7 @@
                                 </tr>
                             </table>
                             <input type="submit" name="adduserbutton" value="Create User"/>
+                            <input type="submit" name="deleteuserbutton" value="Delete User"/>
                         </form>
 
                     </td>
@@ -141,6 +142,8 @@
             Hi <%=userName%>, Login successful. Your Session ID=<%=sessionID%>
             <hr/>
             <a href="./index.html">Back HOME</a>
+            <br/>
+             <a href="./director.xhtml">DIRECTOR</a>
             <br/>
             <em>Leuven Group-T Library</em></div>
     </body>

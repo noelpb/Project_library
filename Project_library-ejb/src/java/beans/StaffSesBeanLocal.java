@@ -23,4 +23,6 @@ public interface StaffSesBeanLocal {
     void closeOrder(String user, Date orderDate);
 
     String getPassword(String usermail);
+
+    boolean deleteUser(String mail);
 }

@@ -11,7 +11,6 @@ import entities.Genre;
 import entities.LibraryItem;
 import entities.Users;
 import java.util.Date;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -36,6 +35,7 @@ public class StaffSesBean implements StaffSesBeanLocal {
     // "Insert Code > Add Business Method")
     @Override
     public void addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname) {
+       
         a = new AuthorItem(author);
         b = new BookItem(bookname, pages, isbn, g);
         b.getWriter().add(a);
@@ -65,6 +65,24 @@ public class StaffSesBean implements StaffSesBeanLocal {
             return s.getPass();
         } catch (NoResultException e) {
             return null;
+        }
+    }
+
+    @Override
+    public boolean deleteUser(String mail) {
+        TypedQuery<Users> query;
+        Users us;
+        try {
+            query = em.createQuery("SELECT u FROM Users  u WHERE u.mail LIKE :name", Users.class);
+            us = query.setParameter("name", mail).getSingleResult();
+        } catch (NoResultException e) {
+            return false;
+        }
+        if (!us.getAdminUser()) {
+            em.remove(us);
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -51,7 +51,6 @@ public class findBookBean implements findBookBeanLocal {
     public List<LibraryItem> findGenre(String genre) {
        TypedQuery<LibraryItem> query=em.createQuery("SELECT l FROM LibraryItem  l WHERE l.bookISBN.genre = :name", LibraryItem.class);
        Genre g = Genre.valueOf(genre);
-
         List<LibraryItem> results = query.setParameter("name", g).getResultList();
         return results;
     }

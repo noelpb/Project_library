@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Director library</title>
+    </h:head>
+    <h:body>
+        <h1>
+            Director service
+        </h1>
+        <hr/>
+        <h:form> 
+            <h:outputText value="Director master password : " /><h:inputSecret id="masterpass" value="#{directorBB.masterpass}" />
+        </h:form> 
+        <hr/>
+        <table style="width:100%"><tr>
+                <td>
+                    <h2>
+                        Edit admin user
+                    </h2>
+
+                    <table>
+                        <h:form>         
+                            <tr>
+                                <td><h:outputText value="Name : " /></td>
+                                <td><h:inputText id="name" value="#{directorBB.name}" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputText value="Surname : " /></td>
+                                <td><h:inputText id="surname" value="#{directorBB.surname}" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputText value="E-mail : " /></td>
+                                <td><h:inputText id="mail" value="#{directorBB.mail}" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputText value="Password : " /></td>
+                                <td><h:inputSecret id="pass" value="#{directorBB.pass}" /></td>
+                            </tr>
+                            <tr>
+                                <td> <h:commandButton value="Add new admin user" action="#{directorBB.addAdmin()}"/><h:commandButton value="Delete user" action="#{directorBB.deleteUser()}"/></td>
+                            </tr>
+                        </h:form>
+                    </table>
+                </td>
+                <td>
+                    <h2>
+                        Edit book
+                    </h2>
+                    <table>
+                        <h:form>         
+                            <tr>
+                                <td><h:outputText value="Book ISBN : " /></td>
+                                <td><h:inputText id="name" value="#{directorBB.isbn}" /></td>
+                            </tr>
+                            <tr>
+                                <td><h:outputText value="Number of books : " /></td>
+                                <td><h:inputText id="surname" value="#{directorBB.count}" /></td>
+                            </tr>
+                            <tr>
+                                <td> <h:commandButton value="Delete book" action="#{directorBB.deleteBook()}"/>
+                                    <h:commandButton value="Change the count" action="#{directorBB.changeBook()}"/></td>
+                            </tr>
+                        </h:form>
+                    </table>
+                </td>
+            </tr></table>
+        <hr/>
+        <h:outputText id="changeone" value="#{directorBB.userchange}" />
+        <h:outputText id="changetwo" value="#{directorBB.bookchange}" />
+        <hr/>
+        <a href="./index.html">Back HOME</a>
+        <br/>
+        <em>Leuven Group-T Library</em>
+    </h:body>
+</html>
+

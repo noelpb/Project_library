@@ -5,10 +5,15 @@
  */
 package beans;
 
+import entities.LibraryItem;
 import entities.Users;
+import java.util.List;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -16,7 +21,8 @@ import javax.persistence.PersistenceContext;
  */
 @Singleton
 public class LibDirector implements LibDirectorLocal {
-    private final String masterpass="director";
+
+    private final String masterpass = "director";
 
     private Users u;
     @PersistenceContext(unitName = "lPU")
@@ -24,22 +30,61 @@ public class LibDirector implements LibDirectorLocal {
 
     @Override
     public void addAdminUser(String name, String surname, String mail, String pass, boolean admin) {
-         u = new Users(name, surname, mail, pass, admin);
+        u = new Users(name, surname, mail, pass, admin);
         em.persist(u);
     }
 
     @Override
-    public void deleteBook(String ISBN) {
-        
-        
+    public boolean deleteBook(String ISBN) {
+        TypedQuery<LibraryItem> query;
+        LibraryItem i = null;
+        boolean res;
+        try {
+            query = em.createQuery("SELECT l FROM LibraryItem  l WHERE l.bookISBN.ISBN LIKE :name", LibraryItem.class);
+            i = query.setParameter("name", ISBN).getSingleResult();
+            em.remove(i);
+            res = true;
+        } catch (NoResultException e) {
+            res = false;
+        }
+        if (i == null) {
+            res = false;
+        }
+        return res;
     }
 
     @Override
-    public void changeCountBooks(String ISBN, int count) {
-        
-        
+    public boolean changeCountBooks(String ISBN, int count) {
+        Query query;
+        boolean res;
+        try {
+            query = em.createQuery("UPDATE LibraryItem l SET l.count = :count WHERE l.bookISBN.ISBN LIKE :name");
+            query.setParameter("count", count);
+            query.setParameter("name", "%" + ISBN + "%");
+            query.executeUpdate();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
     }
-    
-    
+
+    @Override
+    public boolean deleteAdminUser(String mail) {
+        TypedQuery<Users> query;
+        Users us = null;
+        boolean res;
+        try {
+            query = em.createQuery("SELECT u FROM Users  u WHERE u.mail LIKE :name", Users.class);
+            us = query.setParameter("name", mail).getSingleResult();
+            em.remove(us);
+            res= true;
+        } catch (NoResultException e) {
+            res= false;
+        }
+        if (us == null) {
+            res = false;
+        }
+        return res;
+    }
 
 }

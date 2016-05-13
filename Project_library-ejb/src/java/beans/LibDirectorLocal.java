@@ -16,9 +16,10 @@ public interface LibDirectorLocal {
 
     void addAdminUser(String name, String surname, String mail, String pass, boolean admin);
 
-    void deleteBook(String ISBN);
+    boolean deleteAdminUser(String mail);
 
-    void changeCountBooks(String ISBN, int count);
+    boolean deleteBook(String ISBN);
 
-    
+    boolean changeCountBooks(String ISBN, int count);
+
 }

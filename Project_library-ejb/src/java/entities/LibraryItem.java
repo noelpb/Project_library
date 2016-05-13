@@ -33,12 +33,12 @@ public class LibraryItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "isbn_fk")
     private BookItem bookISBN;
     private int count;
     private Boolean availability;
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "id_fk")
     private WaitingListItem waitingList;
     @ManyToMany

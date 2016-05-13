@@ -60,12 +60,18 @@ public class StaffServlet extends HttpServlet {
         int pages, count;
         Genre g;
         response.setContentType("text/html");
+       
 
         bookname = request.getParameter("bookname");
         isbn = request.getParameter("isbn");
         author = request.getParameter("author");
+        try{
         pages = Integer.parseInt(request.getParameter("pages"));
         count = Integer.parseInt(request.getParameter("count"));
+        }catch(NumberFormatException e){
+            pages=0;
+            count=0;
+        }
         g = Genre.valueOf(request.getParameter("genre"));
 
         staffSesBean.addLibItem(count, g, author, pages, isbn, bookname);
@@ -151,15 +157,69 @@ public class StaffServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
-    
-     private void closeorder(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+    private void deleteuser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String name, surname, mail, pass;
+        response.setContentType("text/html");
+        name = request.getParameter("name");
+        surname = request.getParameter("surname");
+        mail = request.getParameter("mail");
+        pass = request.getParameter("pass");
+        PrintWriter out = response.getWriter();
+
+        if (staffSesBean.deleteUser(mail)) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Staff</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>User deleted</h2>");
+            out.println("<hr>");
+            out.println("<TABLE border=0>");
+            out.println("<TR>");
+            out.println("<TD>Name:</TD>");
+            out.println("<TD>" + name + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Surname:</TD>");
+            out.println("<TD>" + surname + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>E-mail (username):</TD>");
+            out.println("<TD>" + mail + "</td>");
+            out.println("</tr>");
+            out.println("</table>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        } else {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Staff</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>User wasn't deleted. User " + mail + " doesn't exist or is admin user!!!</h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    private void closeorder(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username, date;
         response.setContentType("text/html");
         username = request.getParameter("username");
         date = request.getParameter("date");
-        
 
-        
         PrintWriter out = response.getWriter();
         out.println("<!DOCTYPE html>");
         out.println("<html>");
@@ -195,6 +255,8 @@ public class StaffServlet extends HttpServlet {
             adduser(request, response);
         } else if (request.getParameter("closeorderbutton") != null) {
             closeorder(request, response);
+        } else if (request.getParameter("deleteuserbutton") != null) {
+            deleteuser(request, response);
         }
     }
 
