@@ -16,9 +16,9 @@ import javax.ejb.Local;
 @Local
 public interface StaffSesBeanLocal {
 
-    public void addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname);
+    public boolean addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname);
 
-    public void addUser(String name, String surname, String mail, String pass);
+    public boolean addUser(String name, String surname, String mail, String pass);
 
     void closeOrder(String user, Date orderDate);
 

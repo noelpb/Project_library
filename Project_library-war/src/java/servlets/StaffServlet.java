@@ -60,102 +60,138 @@ public class StaffServlet extends HttpServlet {
         int pages, count;
         Genre g;
         response.setContentType("text/html");
-       
+        boolean res;
 
         bookname = request.getParameter("bookname");
         isbn = request.getParameter("isbn");
         author = request.getParameter("author");
-        try{
-        pages = Integer.parseInt(request.getParameter("pages"));
-        count = Integer.parseInt(request.getParameter("count"));
-        }catch(NumberFormatException e){
-            pages=0;
-            count=0;
+        try {
+            pages = Integer.parseInt(request.getParameter("pages"));
+            count = Integer.parseInt(request.getParameter("count"));
+        } catch (NumberFormatException e) {
+            pages = 0;
+            count = 0;
         }
         g = Genre.valueOf(request.getParameter("genre"));
-
-        staffSesBean.addLibItem(count, g, author, pages, isbn, bookname);
         PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet AddBook</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1><centre>Servlet library staff</centre></h1>");
-        out.println("<hr>");
-        out.println("<H2>Book created</h2>");
-        out.println("<hr>");
-        out.println("<TABLE border=0>");
-        out.println("<TR>");
-        out.println("<TD>Book name:</TD>");
-        out.println("<TD>" + bookname + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>Number of pages:</TD>");
-        out.println("<TD>" + pages + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>ISBN:</TD>");
-        out.println("<TD>" + isbn + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>Genre:</TD>");
-        out.println("<TD>" + g.toString() + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>Writer:</TD>");
-        out.println("<TD>" + author + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>Number of books:</TD>");
-        out.println("<TD>" + count + "</td>");
-        out.println("</tr>");
-        out.println("</table>");
-        out.println("<a href=\"./index.html\">Back HOME</a>");
-        out.println("<br/>");
-        out.println("</body>");
-        out.println("</html>");
+        res = staffSesBean.addLibItem(count, g, author, pages, isbn, bookname);
+        if (res) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddBook</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>Book created</h2>");
+            out.println("<hr>");
+            out.println("<TABLE border=0>");
+            out.println("<TR>");
+            out.println("<TD>Book name:</TD>");
+            out.println("<TD>" + bookname + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Number of pages:</TD>");
+            out.println("<TD>" + pages + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>ISBN:</TD>");
+            out.println("<TD>" + isbn + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Genre:</TD>");
+            out.println("<TD>" + g.toString() + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Writer:</TD>");
+            out.println("<TD>" + author + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Number of books:</TD>");
+            out.println("<TD>" + count + "</td>");
+            out.println("</tr>");
+            out.println("</table>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        } else {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddUser</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2><font color=\"red\">Book with this ISBN already exists. Please check the ISBN and try it again.</font></h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+
     }
 
     private void adduser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name, surname, mail, pass;
+        boolean res;
+        PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         name = request.getParameter("name");
         surname = request.getParameter("surname");
         mail = request.getParameter("mail");
         pass = request.getParameter("pass");
 
-        staffSesBean.addUser(name, surname, mail, pass);
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet AddUser</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1><centre>Servlet library staff</centre></h1>");
-        out.println("<hr>");
-        out.println("<H2>User added</h2>");
-        out.println("<hr>");
-        out.println("<TABLE border=0>");
-        out.println("<TR>");
-        out.println("<TD>Name:</TD>");
-        out.println("<TD>" + name + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>Surname:</TD>");
-        out.println("<TD>" + surname + "</td>");
-        out.println("</tr>");
-        out.println("<TR>");
-        out.println("<TD>E-mail (username):</TD>");
-        out.println("<TD>" + mail + "</td>");
-        out.println("</tr>");
-        out.println("</table>");
-        out.println("<a href=\"./index.html\">Back HOME</a>");
-        out.println("<br/>");
-        out.println("</body>");
-        out.println("</html>");
+        res = staffSesBean.addUser(name, surname, mail, pass);
+        if (res) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddUser</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>User added</h2>");
+            out.println("<hr>");
+            out.println("<TABLE border=0>");
+            out.println("<TR>");
+            out.println("<TD>Name:</TD>");
+            out.println("<TD>" + name + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>Surname:</TD>");
+            out.println("<TD>" + surname + "</td>");
+            out.println("</tr>");
+            out.println("<TR>");
+            out.println("<TD>E-mail (username):</TD>");
+            out.println("<TD>" + mail + "</td>");
+            out.println("</tr>");
+            out.println("</table>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        } else {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddUser</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2><font color=\"red\">User already exists. Please check the user e-mail and try it again.</font></h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<br/>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+
     }
 
     private void deleteuser(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -205,7 +241,7 @@ public class StaffServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1><centre>Servlet library staff</centre></h1>");
             out.println("<hr>");
-            out.println("<H2>User wasn't deleted. User " + mail + " doesn't exist or is admin user!!!</h2>");
+            out.println("<H2><font color=\"red\">User wasn't deleted. User " + mail + " doesn't exist or is admin user!!!</font></h2>");
             out.println("<hr>");
             out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("<br/>");

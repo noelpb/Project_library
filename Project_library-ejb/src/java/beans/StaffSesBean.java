@@ -34,9 +34,26 @@ public class StaffSesBean implements StaffSesBeanLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
-    public void addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname) {
-       
-        a = new AuthorItem(author);
+    public boolean addLibItem(int count, Genre g, String author, int pages, String isbn, String bookname) {
+        TypedQuery<AuthorItem> query;
+        TypedQuery<LibraryItem> query2;
+        a = null;
+        l = null;
+        try {
+            query = em.createQuery("SELECT a FROM AuthorItem  a WHERE a.name LIKE :name", AuthorItem.class);
+            a = query.setParameter("name", author).getSingleResult();
+        } catch (NoResultException e) {
+            a = new AuthorItem(author);
+        }
+        try {
+            query2 = em.createQuery("SELECT l FROM LibraryItem l WHERE l.bookISBN.ISBN LIKE :name", LibraryItem.class);
+            l = query2.setParameter("name", isbn).getSingleResult();
+        } catch (NoResultException e) {
+            l = null;
+        }
+        if (l != null) {
+            return false;
+        }
         b = new BookItem(bookname, pages, isbn, g);
         b.getWriter().add(a);
         a.getBook().add(b);
@@ -44,12 +61,26 @@ public class StaffSesBean implements StaffSesBeanLocal {
         em.persist(l);
         em.persist(b);
         em.persist(a);
+        return true;
     }
 
     @Override
-    public void addUser(String name, String surname, String mail, String pass) {
-        u = new Users(name, surname, mail, pass);
-        em.persist(u);
+    public boolean addUser(String name, String surname, String mail, String pass) {
+        TypedQuery<Users> query;
+        Users us;
+        try {
+            query = em.createQuery("SELECT u FROM Users  u WHERE u.mail LIKE :name", Users.class);
+            us = query.setParameter("name", mail).getSingleResult();
+        } catch (NoResultException e) {
+            us = null;
+        }
+        if (us == null) {
+            u = new Users(name, surname, mail, pass);
+            em.persist(u);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
