@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,8 @@ public class Orders implements Serializable {
     @ManyToOne
     @JoinTable(name = "jnd_oder_user", joinColumns = @JoinColumn(name = "order_fk"), inverseJoinColumns = @JoinColumn(name = "user_fk"))
     private Users user;
-    @ManyToMany(mappedBy = "orders")
+    @ManyToMany
+    @JoinTable(name = "jnd_lib_order", joinColumns = @JoinColumn(name = "orders_fk"), inverseJoinColumns = @JoinColumn(name = "lib_fk"))
     private List<LibraryItem> libItem;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date startDate;
@@ -49,6 +51,23 @@ public class Orders implements Serializable {
     public Orders() {
         startDate = new Date();
         endDate = this.addDays(startDate, 30);
+
+    }
+
+    public Orders(Users user, List<LibraryItem> libItem) {
+        this.user = user;
+        this.libItem = libItem;
+        startDate = new Date();
+        endDate = this.addDays(startDate, 0);
+        openOrder = true;
+    }
+
+    public Orders(Users user) {
+        this.user = user;
+        this.libItem = new ArrayList<>();
+        startDate = new Date();
+        endDate = this.addDays(startDate, 0);
+        openOrder = true;
     }
 
     public Users getUser() {

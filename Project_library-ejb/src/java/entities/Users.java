@@ -40,8 +40,9 @@ public class Users implements Serializable {
     private Boolean adminUser;
     @OneToMany(mappedBy = "user")
     private List<Orders> orders;
-    @ManyToOne
-    @OneToMany(mappedBy = "userWL")
+  private boolean masterAdmin;
+     @ManyToOne
+    @JoinColumn(name = "waiting_fk")
     private WaitingListItem waitlist;
 
     public Users(String name, String surname, String mail, String pass) {
@@ -51,6 +52,8 @@ public class Users implements Serializable {
         this.pass = pass;
         this.adminUser = false;
         this.orders = new ArrayList<>();
+        this.waitlist=null;
+      this.masterAdmin=false;
     }
 
     public Users(String name, String surname, String mail, String pass, Boolean adminUser) {
@@ -60,8 +63,32 @@ public class Users implements Serializable {
         this.adminUser = adminUser;
         this.orders = new ArrayList<>();
         this.name = name;
+        this.waitlist=null;
+       this.masterAdmin=false;
     }
 
+    public Users(boolean masterAdmin) {
+         this.surname = "Director";
+        this.mail = "director@gmail.com";
+        this.pass = "password";
+        this.adminUser = true;
+        this.orders = new ArrayList<>();
+        this.name = "Master";
+        this.waitlist=null;
+        this.masterAdmin = true;
+    }
+    
+    
+
+    public WaitingListItem getWaitlist() {
+        return waitlist;
+    }
+
+    public void setWaitlist(WaitingListItem waitlist) {
+        this.waitlist = waitlist;
+    }
+
+    
     
     public String getMail() {
         return mail;

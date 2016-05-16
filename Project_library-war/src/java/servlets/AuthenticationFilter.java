@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Nudista
  */
-@WebFilter(filterName = "/AuthenticationFilter")
+@WebFilter(filterName = "AuthenticationFilter", urlPatterns = {"/staffJSP.jsp"})
 public class AuthenticationFilter implements Filter {
      private ServletContext context;
     private static final boolean debug = true;
@@ -106,6 +106,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
          
+        
         String uri = req.getRequestURI();
         this.context.log("Requested Resource::"+uri);
          

@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Leuven Group-T Library</title>
+    </h:head>
+    <h:body>
+        <h1>
+            Customer service
+        </h1>
+        <h:outputText value="#{customerBB.result}"/>
+        <hr/>
+        <h:form> 
+            <h:outputText value="User: "/> <h:outputText value="#{customerBB.user}"/>
+            <br/><h:commandButton value="Finish my order" action="#{customerBB.next()}"/>
+            <br/><h:commandButton value="See my orders" action="confirmation?faces-redirect=truee"/>
+        </h:form> 
+        <hr/>
+        <h2>
+            Find your books in our library
+        </h2>
+
+        <table>
+            <h:form>         
+                <tr>
+                    <td><h:outputText value="Name : " /></td>
+                    <td><h:inputText id="name" value="#{customerBB.name}" /></td>
+                    <td> <h:commandButton value="Find by name" action="#{customerBB.findByName()}"/></td>
+                </tr>
+            </h:form>
+            <h:form>   
+                <tr>
+                    <td><h:outputText value="Author : " /></td>
+                    <td><h:inputText id="author" value="#{customerBB.author}" /></td>
+                    <td> <h:commandButton value="Find by author" action="#{customerBB.findByAuthor()}"/></td>
+                </tr>
+            </h:form>
+            <h:form>   
+                <tr>
+                    <td><h:outputText value="ISBN : " /></td>
+                    <td><h:inputText id="isbn" value="#{customerBB.isbn}" /></td>
+                    <td> <h:commandButton value="Find by ISBN" action="#{customerBB.findByISBN()}"/></td>
+                </tr>
+            </h:form>
+            <h:form>   
+                <tr>
+                    <td><h:outputText value="Genre : " /></td>
+                    <td>
+                        <h:selectOneMenu value="#{customerBB.genre}">
+                            <f:selectItem itemValue="COMEDY" itemLabel="Comedy" />
+                            <f:selectItem itemValue="DRAMA" itemLabel="Drama" />
+                            <f:selectItem itemValue="NONFICTION" itemLabel="Non-fiction" />
+                            <f:selectItem itemValue="FICTION" itemLabel="Fiction" />
+                            <f:selectItem itemValue="NOVEL" itemLabel="Novel" />
+                            <f:selectItem itemValue="SATIRE" itemLabel="Satire" />
+                            <f:selectItem itemValue="TRAGEDY" itemLabel="Tragedy" />
+                        </h:selectOneMenu> </td>
+                    <td> <h:commandButton value="Find by genre" action="#{customerBB.findByGenre()}"/></td>
+                </tr>
+            </h:form>
+
+        </table>
+        <h:form> 
+            <h:commandButton value="Show me all books" action="#{customerBB.findAll()}"/>
+        </h:form>
+        <hr/>
+        <f:view>
+
+
+            <h:form>
+                <h2><h:outputText value="Found books:"/></h2>
+                <h:dataTable value="#{customerBB.resultList}" var="item" border="1"  binding="#{customerBB.datatableBooks}">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ISBN"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.ISBN}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Genre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.genre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Author"/>
+                        </f:facet>
+                        <ui:repeat var="o" value="#{item.bookISBN.writer}">
+                            #{o.name} 
+                        </ui:repeat>  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Count"/>
+                        </f:facet>
+                        <h:outputText value="#{item.count}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Availability"/>
+                        </f:facet>
+                        <h:outputText value="#{item.availability}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Add to cart" action="#{customerBB.addToCart()}" disabled="#{!item.availability}"/>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Add to waitinglist" actionListener="#{customerBB.addToWishlist}" disabled="#{item.availability}" />
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
+        <hr/>
+        <a href="./index.html">Back HOME</a>
+        <br/>
+        <em>Leuven Group-T Library</em>
+    </h:body>
+</html>
+

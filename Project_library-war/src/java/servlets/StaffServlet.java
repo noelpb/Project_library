@@ -112,8 +112,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<TD>" + count + "</td>");
             out.println("</tr>");
             out.println("</table>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         } else {
@@ -127,8 +128,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<hr>");
             out.println("<H2><font color=\"red\">Book with this ISBN already exists. Please check the ISBN and try it again.</font></h2>");
             out.println("<hr>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -171,8 +173,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<TD>" + mail + "</td>");
             out.println("</tr>");
             out.println("</table>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         } else {
@@ -186,8 +189,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<hr>");
             out.println("<H2><font color=\"red\">User already exists. Please check the user e-mail and try it again.</font></h2>");
             out.println("<hr>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -228,8 +232,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<TD>" + mail + "</td>");
             out.println("</tr>");
             out.println("</table>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         } else {
@@ -243,8 +248,9 @@ public class StaffServlet extends HttpServlet {
             out.println("<hr>");
             out.println("<H2><font color=\"red\">User wasn't deleted. User " + mail + " doesn't exist or is admin user!!!</font></h2>");
             out.println("<hr>");
-            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
             out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -255,22 +261,41 @@ public class StaffServlet extends HttpServlet {
         response.setContentType("text/html");
         username = request.getParameter("username");
         date = request.getParameter("date");
-
         PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Servlet AddUser</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1><centre>Servlet library staff</centre></h1>");
-        out.println("<hr>");
-        out.println("<H2>Order is closed</h2>");
-        out.println("<hr>");
-        out.println("<a href=\"./index.html\">Back HOME</a>");
-        out.println("<br/>");
-        out.println("</body>");
-        out.println("</html>");
+
+        if (staffSesBean.closeOrder(username, date)) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Staff Library</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>Order was closed.</h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
+            out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("</body>");
+            out.println("</html>");
+        } else {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Staff Library</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2>Order was not found</h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
+            out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -317,6 +342,7 @@ public class StaffServlet extends HttpServlet {
         if (pwd.equals(passFromDatabase) || (pwd.equals("demopassword") && user.equals("demouser"))) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+
             //setting session to expiry in 30 mins
             session.setMaxInactiveInterval(30 * 60);
             Cookie userName = new Cookie("user", user);

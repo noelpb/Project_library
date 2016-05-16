@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +42,7 @@ public class LibraryItem implements Serializable {
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "id_fk")
     private WaitingListItem waitingList;
-    @ManyToMany
-    @JoinTable(name = "jnd_lib_order", joinColumns = @JoinColumn(name = "lib_fk"), inverseJoinColumns = @JoinColumn(name = "oder_fk"))
+    @ManyToMany(mappedBy = "libItem")
     private List<Orders> orders;
 
     public LibraryItem() {
@@ -53,6 +53,7 @@ public class LibraryItem implements Serializable {
         this.count = count;
         this.availability = true;
         this.waitingList = null;
+        this.orders=new ArrayList<>();
     }
 
     public LibraryItem(BookItem ISBN, int count, Boolean availability, WaitingListItem waitingList) {
@@ -60,7 +61,9 @@ public class LibraryItem implements Serializable {
         this.count = count;
         this.availability = availability;
         this.waitingList = waitingList;
+        this.orders=new ArrayList<>();
     }
+    
 
     public int getCount() {
         return count;

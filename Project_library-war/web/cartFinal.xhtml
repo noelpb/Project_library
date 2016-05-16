@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Leuven Group-T Library</title>
+    </h:head>
+    <h:body>
+        <h1>
+            Customer service
+        </h1>
+        <hr/>
+
+        <h:outputText value="User: "/> <h:outputText value="#{customerBB.user}"/>
+        <hr/>
+        <f:view>
+            <h:form>
+                <h2><h:outputText value="Found books:"/></h2>
+                <h:dataTable value="#{customerBB.customerBean.myCart}" var="item" border="1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ISBN"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.ISBN}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Genre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.bookISBN.genre}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Author"/>
+                        </f:facet>
+                        <ui:repeat var="o" value="#{item.bookISBN.writer}">
+                            #{o.name} 
+                        </ui:repeat>  
+                    </h:column>
+                </h:dataTable>
+                <h:commandButton value="Finish order" action="#{customerBB.finishIt()}"/>
+            </h:form>
+        </f:view>
+        <hr/>
+        <a href="./index.html">Back HOME</a>
+        <br/>
+        <em>Leuven Group-T Library</em>
+    </h:body>
+</html>

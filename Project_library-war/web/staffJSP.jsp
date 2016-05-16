@@ -128,7 +128,7 @@
                                 </tr>
                                 <tr>
                                     <td>From date :</td>
-                                    <td><input type="text" name="date"/></td>
+                                    <td><input type="text" name="date" value="mm/dd/yyyy"/></td>
                                 </tr>
                             </table>
                             <input type="submit" name="closeorderbutton" value="Close Order"/>
@@ -143,7 +143,7 @@
             <hr/>
             <a href="./index.html">Back HOME</a>
             <br/>
-             <a href="./director.xhtml">DIRECTOR</a>
+            <a href="./director.xhtml">DIRECTOR</a>
             <br/>
             <em>Leuven Group-T Library</em></div>
     </body>

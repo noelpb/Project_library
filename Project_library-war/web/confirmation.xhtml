@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Leuven Group-T Library</title>
+    </h:head>
+    <h:body>
+        <h1>
+            Customer service
+        </h1>
+        <h2><h:outputText value="Your order is confirmed"/></h2>
+        <hr/>
+
+        <h:outputText value="User: "/> <h:outputText value="#{customerBB.user}"/>
+        <hr/>
+       
+        <f:view>
+
+
+            <h:form>
+                <h3><h:outputText value="List of your actual orders"/></h3>
+                <h:dataTable value="#{customerBB.allMyOrders}" var="item" border="1">
+                     <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Start date"/>
+                        </f:facet>
+                        <h:outputText value="#{item.startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="End date"/>
+                        </f:facet>
+                        <h:outputText value="#{item.endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Books in this order"/>
+                        </f:facet>
+                        <h:outputText value="#{customerBB.getBooksFromOrder(item.id)}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
+
+        <f:view>
+
+
+            <h:form>
+                <h3><h:outputText value="My wishlists:"/></h3>
+                <h:dataTable value="#{customerBB.allMyWaiting}" var="item" border="1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.libId.bookISBN.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ISBN"/>
+                        </f:facet>
+                        <h:outputText value="#{item.libId.bookISBN.ISBN}"/>
+                    </h:column>
+                     </h:dataTable>
+            </h:form>
+        </f:view>
+<hr/>
+<h:form>
+ <h:commandButton value="Log out" action="#{customerBB.logout()}"/>       
+  </h:form>  
+
+        <hr/>
+        <em>Leuven Group-T Library</em>
+    </h:body>
+</html>
+
+

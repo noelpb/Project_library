@@ -9,11 +9,13 @@ import entities.AuthorItem;
 import entities.BookItem;
 import entities.Genre;
 import entities.LibraryItem;
+import entities.Orders;
 import entities.Users;
 import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -84,7 +86,23 @@ public class StaffSesBean implements StaffSesBeanLocal {
     }
 
     @Override
-    public void closeOrder(String user, Date orderDate) {
+    public boolean closeOrder(String user, String orderDate) {
+        Orders o;
+        TypedQuery<Orders> query;
+        Date ost = new Date(orderDate);
+        System.out.println(ost);
+        try {
+            query = em.createQuery("SELECT o FROM Orders o INNER JOIN o.user u WHERE u.mail = :param AND o.startDate = :date", Orders.class);
+            query.setParameter("date", ost);
+            o = query.setParameter("param", user).getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            return false;
+        } 
+        o.setOpenOrder(false);
+        o.getLibItem().stream().forEach((object) -> {
+            object.setAvailability(true);
+        });
+        return true;
     }
 
     @Override

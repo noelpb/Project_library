@@ -89,7 +89,7 @@ public class AuthorItem implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.AuthorItem[ id=" + id + " ]";
+        return name;
     }
 
 }

@@ -9,8 +9,9 @@ import entities.Users;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.mail.MessagingException;
@@ -20,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.mail.Authenticator;
 
 /**
  *
@@ -32,12 +34,12 @@ public class Orderchecking implements OrdercheckingLocal {
     private EntityManager em;
     private Date today;
 
-    @Schedule(hour = "13", minute = "09")
+    @Schedule(hour = "12", minute = "01")
     @Override
     public void myTimer() {
         today = new Date();
         System.out.println("Timer event: " + today);
-        checkOrder(today);
+        System.out.println(checkOrder(today));
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -53,53 +55,63 @@ public class Orderchecking implements OrdercheckingLocal {
             results = null;
         }
         for (Users result : results) {
-            sendMail(result.getMail());
+            try {
+                sendMail(result.getMail());
+            } catch (MessagingException ex) {
+                Logger.getLogger(Orderchecking.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
-        return results.size() + "e-mails sends today";
-
+        return results.size() + " e-mails was sent today";
     }
 
-    private void sendMail(String mail) {
-        // Recipient's email ID needs to be mentioned.
-        String to = mail;
+    private void sendMail(String mail) throws MessagingException {
+        String d_email = "matousmejem@seznam.cz",
+                d_uname = "matousmejem@seznam.cz",
+                d_password = "Palec5529",
+                d_host = "smtp.seznam.cz",
+                d_port = "465",
+                m_to = mail,
+                m_subject = "Group T library ",
+                m_text = "Today is the last day of your order";
+        Properties props = new Properties();
+        props.put("mail.smtp.user", d_email);
+        props.put("mail.smtp.host", d_host);
+        props.put("mail.smtp.port", d_port);
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.debug", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.socketFactory.port", d_port);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
 
-        // Sender's email ID needs to be mentioned
-        String from = "matousmejem@seznam.cz";
-
-        // Assuming you are sending email from localhost
-        String host = "localhost";
-
-        // Get system properties
-        Properties properties = System.getProperties();
-
-        // Setup mail server
-        properties.setProperty("mail.smtp.host", host);
-
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
-
+        Authenticator auth = new SMTPAuthenticator();
+        Session session = Session.getInstance(props, auth);
+        MimeMessage msg = new MimeMessage(session);
         try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
+            msg.setSubject(m_subject);
+            msg.setText(m_text);
+            msg.setFrom(new InternetAddress(d_email));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(m_to));
+            Transport transport = session.getTransport("smtps");
+            transport.connect(d_host, Integer.valueOf(d_port), d_uname, d_password);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
+        } catch (AddressException e) {
+            e.printStackTrace();
+            System.out.println("error address");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.out.println("error Messaging");
+        }
+    }
 
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Set Subject: header field
-            message.setSubject("Groep T library order");
-
-            // Now set the actual message
-            message.setText("Dear user, please give all the books back or we will kill you!");
-
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+        @Override
+        public PasswordAuthentication getPasswordAuthentication() {
+            String username = "matousmejem@seznam.cz";
+            String password = "Palec5529";
+            return new PasswordAuthentication(username, password);
         }
     }
 }
