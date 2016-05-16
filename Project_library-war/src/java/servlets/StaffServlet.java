@@ -26,6 +26,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "StaffServlet", urlPatterns = {"/staff"})
 public class StaffServlet extends HttpServlet {
 
+    
+    
     @EJB
     private StaffSesBeanLocal staffSesBean;
 

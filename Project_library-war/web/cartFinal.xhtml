@@ -47,7 +47,7 @@
                         </ui:repeat>  
                     </h:column>
                 </h:dataTable>
-                <h:commandButton value="Finish order" action="#{customerBB.finishIt()}"/>
+                <h:commandButton value="Finish order" action="#{customerBB.finishIt()}" disabled="#{customerBB.emptyCart()}"/>
             </h:form>
         </f:view>
         <hr/>

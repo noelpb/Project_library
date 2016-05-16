@@ -181,6 +181,15 @@ public class customerBB implements Serializable {
         }
 
     }
+    
+    public boolean emptyCart(){
+      int i =  customerBean.getMyCart().size();
+      if(i==0){
+          return true;
+      }else{
+          return false;
+      }
+    }
 
     public void addToCart() {
         LibraryItem book = (LibraryItem) datatableBooks.getRowData();
