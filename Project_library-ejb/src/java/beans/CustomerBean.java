@@ -89,7 +89,7 @@ public class CustomerBean implements CustomerBeanLocal {
         Orders order;
         Date dateO = new Date();
         try {
-            queryo = em.createQuery("SELECT o FROM Orders o INNER JOIN o.user u WHERE u.mail LIKE :usernam AND o.startDate = :dateO", Orders.class);
+            queryo = em.createQuery("SELECT o FROM Orders o INNER JOIN o.user u WHERE u.mail LIKE :usernam AND o.startDate = :dateO AND o.openOrder = TRUE", Orders.class);
             queryo.setParameter("dateO", dateO);
             order = queryo.setParameter("usernam", user).getSingleResult();
         } catch (NoResultException e) {
