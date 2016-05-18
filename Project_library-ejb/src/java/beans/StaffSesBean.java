@@ -90,7 +90,6 @@ public class StaffSesBean implements StaffSesBeanLocal {
         Orders o;
         TypedQuery<Orders> query;
         Date ost = new Date(orderDate);
-        System.out.println(ost);
         try {
             query = em.createQuery("SELECT o FROM Orders o INNER JOIN o.user u WHERE u.mail = :param AND o.startDate = :date", Orders.class);
             query.setParameter("date", ost);
@@ -99,9 +98,12 @@ public class StaffSesBean implements StaffSesBeanLocal {
             return false;
         } 
         o.setOpenOrder(false);
-        o.getLibItem().stream().forEach((object) -> {
-            object.setAvailability(true);
-        });
+        
+         for (LibraryItem li : o.getLibItem()) {
+            li.setAvailability(true);
+        }
+    
+       
         return true;
     }
 
