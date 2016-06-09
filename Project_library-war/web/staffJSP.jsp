@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr>
                                     <td>E-mail :</td>
-                                    <td><input type="text" name="mail"/></td>
+                                    <td><input type="email" name="mail"/></td>
                                 </tr>
                                 <tr>
                                     <td>Password :</td>
@@ -124,7 +124,7 @@
                             <table>
                                 <tr>
                                     <td>Order of user :</td>
-                                    <td><input type="text" name="username"/></td>
+                                    <td><input type="email" name="username"/></td>
                                 </tr>
                                 <tr>
                                     <td>From date :</td>
@@ -136,14 +136,18 @@
                     </td>
                 </tr>
             </table>
+             
             <hr/>
+            <form action="./staff" method="get">
+            <input type="hidden" name="usermail1" value=<%=user%> />
+            <input type="submit" name="director" value="Director" />
+            </form>
+            <br/>
             User=<%=user%>
             <br/>
-            Hi <%=userName%>, Login successful. Your Session ID=<%=sessionID%>
+             Hi <%=userName%>, Login successful. Your Session ID=<%=sessionID%>
             <hr/>
             <a href="./index.html">Back HOME</a>
-            <br/>
-            <a href="./director.xhtml">DIRECTOR</a>
             <br/>
             <em>Leuven Group-T Library</em></div>
     </body>

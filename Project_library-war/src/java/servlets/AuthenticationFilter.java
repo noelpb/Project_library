@@ -109,7 +109,7 @@ public class AuthenticationFilter implements Filter {
         
         String uri = req.getRequestURI();
         this.context.log("Requested Resource::"+uri);
-         
+         req.setAttribute("REMOTE_USER", "some user ID");
         HttpSession session = req.getSession(false);
          
         if(session == null && !(uri.endsWith("html") || uri.endsWith("StaffServlet"))){

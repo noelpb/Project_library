@@ -26,8 +26,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "StaffServlet", urlPatterns = {"/staff"})
 public class StaffServlet extends HttpServlet {
 
-    
-    
     @EJB
     private StaffSesBeanLocal staffSesBean;
 
@@ -300,6 +298,34 @@ public class StaffServlet extends HttpServlet {
         }
     }
 
+    private void director(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username;
+        response.setContentType("text/html");
+        username = request.getParameter("usermail1");
+        PrintWriter out = response.getWriter();
+        
+        if (staffSesBean.checkDirector(username)) {
+            response.sendRedirect("./director.xhtml");
+        } else {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Staff</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1><centre>Servlet library staff</centre></h1>");
+            out.println("<hr>");
+            out.println("<H2><font color=\"red\">You are not a director!</font></h2>");
+            out.println("<hr>");
+            out.println("<a href=\"./staffJSP.jsp\">Back</a>");
+            out.println("<br/>");
+            out.println("<a href=\"./index.html\">Back HOME</a>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -320,6 +346,8 @@ public class StaffServlet extends HttpServlet {
             closeorder(request, response);
         } else if (request.getParameter("deleteuserbutton") != null) {
             deleteuser(request, response);
+        } else if (request.getParameter("director") != null) {
+            director(request, response);
         }
     }
 

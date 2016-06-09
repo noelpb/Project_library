@@ -96,14 +96,13 @@ public class StaffSesBean implements StaffSesBeanLocal {
             o = query.setParameter("param", user).getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
             return false;
-        } 
+        }
         o.setOpenOrder(false);
-        
-         for (LibraryItem li : o.getLibItem()) {
+
+        for (LibraryItem li : o.getLibItem()) {
             li.setAvailability(true);
         }
-    
-       
+
         return true;
     }
 
@@ -117,6 +116,7 @@ public class StaffSesBean implements StaffSesBeanLocal {
         } catch (NoResultException e) {
             return null;
         }
+
     }
 
     @Override
@@ -133,6 +133,22 @@ public class StaffSesBean implements StaffSesBeanLocal {
             em.remove(us);
             return true;
         } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkDirector(String usermail) {
+        Users s;
+        try {
+            TypedQuery<Users> query = em.createQuery("SELECT u FROM Users u WHERE u.mail = :param AND u.masterAdmin = TRUE", Users.class);
+            s = query.setParameter("param", usermail).getSingleResult();
+         } catch (NoResultException e) {
+            return false;
+        }
+        if(s.isMasterAdmin()){
+            return true;
+        }else{
             return false;
         }
     }

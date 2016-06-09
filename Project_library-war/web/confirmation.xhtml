@@ -17,14 +17,14 @@
 
         <h:outputText value="User: "/> <h:outputText value="#{customerBB.user}"/>
         <hr/>
-       
+
         <f:view>
 
 
             <h:form>
                 <h3><h:outputText value="List of your actual orders"/></h3>
                 <h:dataTable value="#{customerBB.allMyOrders}" var="item" border="1">
-                     <h:column>
+                    <h:column>
                         <f:facet name="header">
                             <h:outputText value="Start date"/>
                         </f:facet>
@@ -51,34 +51,13 @@
         </f:view>
 
 
-        <f:view>
-
-
+            <hr/>
             <h:form>
-                <h3><h:outputText value="My wishlists:"/></h3>
-                <h:dataTable value="#{customerBB.allMyWaiting}" var="item" border="1">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Name"/>
-                        </f:facet>
-                        <h:outputText value="#{item.libId.bookISBN.name}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="ISBN"/>
-                        </f:facet>
-                        <h:outputText value="#{item.libId.bookISBN.ISBN}"/>
-                    </h:column>
-                     </h:dataTable>
-            </h:form>
-        </f:view>
-<hr/>
-<h:form>
- <h:commandButton value="Log out" action="#{customerBB.logout()}"/>       
-  </h:form>  
+                <h:commandButton value="Log out" action="#{customerBB.logout()}"/>       
+            </h:form>  
 
-        <hr/>
-        <em>Leuven Group-T Library</em>
+            <hr/>
+            <em>Leuven Group-T Library</em>
     </h:body>
 </html>
 

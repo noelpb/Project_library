@@ -115,10 +115,7 @@
                     <h:column>
                         <h:commandButton value="Add to cart" action="#{customerBB.addToCart()}" disabled="#{!item.availability}"/>
                     </h:column>
-                    <h:column>
-                        <h:commandButton value="Add to waitinglist" actionListener="#{customerBB.addToWishlist}" disabled="#{item.availability}" />
-                    </h:column>
-                </h:dataTable>
+                  </h:dataTable>
             </h:form>
         </f:view>
 

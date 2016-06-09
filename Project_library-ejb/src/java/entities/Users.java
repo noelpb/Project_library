@@ -41,6 +41,7 @@ public class Users implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Orders> orders;
   private boolean masterAdmin;
+  
      @ManyToOne
     @JoinColumn(name = "waiting_fk")
     private WaitingListItem waitlist;
@@ -86,6 +87,14 @@ public class Users implements Serializable {
 
     public void setWaitlist(WaitingListItem waitlist) {
         this.waitlist = waitlist;
+    }
+
+    public boolean isMasterAdmin() {
+        return masterAdmin;
+    }
+
+    public void setMasterAdmin(boolean masterAdmin) {
+        this.masterAdmin = masterAdmin;
     }
 
     

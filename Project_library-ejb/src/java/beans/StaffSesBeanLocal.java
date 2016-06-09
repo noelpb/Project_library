@@ -25,4 +25,6 @@ public interface StaffSesBeanLocal {
     String getPassword(String usermail);
 
     boolean deleteUser(String mail);
+
+    boolean checkDirector(String usermail);
 }

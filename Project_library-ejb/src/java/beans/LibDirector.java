@@ -7,22 +7,24 @@ package beans;
 
 import entities.LibraryItem;
 import entities.Users;
-import java.util.List;
 import javax.ejb.Singleton;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import timersandinterceptors.Interceptor;
 
 /**
  *
  * @author Nudista
  */
 @Singleton
+@Interceptors(Interceptor.class)
+
 public class LibDirector implements LibDirectorLocal {
 
-    private final String masterpass = "director";
 
     private Users u;
     @PersistenceContext(unitName = "lPU")
