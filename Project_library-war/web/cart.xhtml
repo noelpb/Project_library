@@ -20,6 +20,13 @@
             <br/><h:commandButton value="See my orders" action="confirmation?faces-redirect=truee"/>
         </h:form> 
         <hr/>
+        <h2>Can´t Find something?  </h2>
+        <h:form>         
+                <tr>
+                    <td><h:inputText id="question" value="#{customerBB.question}" /></td>
+                    <td> <h:commandButton value="Ask a Librarian" action="#{customerBB.sendQuestion()}"/></td>
+                </tr>
+            </h:form>
         <h2>
             Find your books in our library
         </h2>

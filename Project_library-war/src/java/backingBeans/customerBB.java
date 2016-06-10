@@ -35,7 +35,15 @@ public class customerBB implements Serializable {
 
     @EJB
     private CustomerBeanLocal customerBean;
-    private String user, pass, url, result;
+    private String question, user, pass, url, result;
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
     private HtmlDataTable datatableBooks;
     @EJB
     private findBookBeanLocal findBookBean;
@@ -156,6 +164,10 @@ public class customerBB implements Serializable {
 
     public void findAll() {
         resultList = findBookBean.selectAll();
+    }
+    
+    public void sendQuestion(){
+        //customerBean.sendQuestion(String question, String user);
     }
 
     public String log() {

@@ -7,6 +7,7 @@ package beans;
 
 import entities.LibraryItem;
 import entities.Orders;
+import entities.QuestionItem;
 import entities.WaitingListItem;
 import entities.Users;
 import java.util.ArrayList;
@@ -181,6 +182,17 @@ public class CustomerBean implements CustomerBeanLocal {
          s=s+ " , " + result.getBookISBN().getName()+"("+result.getBookISBN().getISBN()+")";
         }
         return s;
+    }
+    
+    public void sendQuestion(String question, String user){
+        TypedQuery<Users> query;
+        Users us;
+        query=em.createQuery("SELECT u FROM Users u WHERE u.name = :param", Users.class);
+        us = query.setParameter("param", user).getSingleResult();
+        
+        QuestionItem q= new QuestionItem(question, us.getMail());
+        
+    
     }
   
     

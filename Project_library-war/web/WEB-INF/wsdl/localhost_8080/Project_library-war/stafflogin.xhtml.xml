@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+--><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Create a new book</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <div><h1>Servlet library staff</h1>
+            <hr />
+
+            <form action="./staff" method="post">
+
+                <h3>LOG IN</h3>
+                <table>
+                    <tr>
+                        <td>Username e-mail:</td>
+                        <td><input type="text" name="user" value="@" /></td>
+                    </tr>
+                    <tr>
+                        <td>Password :</td>
+                        <td><input type="password" name="pass" /></td>
+                    </tr>
+
+                </table>
+
+                <input type="submit" value="Login" />
+                <hr />
+            </form>
+        </div>
+    </body>
+</html>
