@@ -23,15 +23,15 @@ public class QuestionItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String question;
-    private String email;
+    private String mail;
 
     public QuestionItem() {
     }
 
     
-    public QuestionItem(String question, String email) {
+    public QuestionItem(String question, String mail) {
         this.question = question;
-        this.email = email;
+        this.mail = mail;
     }
 
     
@@ -44,12 +44,12 @@ public class QuestionItem implements Serializable {
         this.question = question;
     }
 
-    public String getEmail() {
-        return email;
+    public String getMail() {
+        return mail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public Long getId() {

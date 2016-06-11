@@ -167,7 +167,7 @@ public class customerBB implements Serializable {
     }
     
     public void sendQuestion(){
-        //customerBean.sendQuestion(String question, String user);
+        customerBean.sendQuestion(this.question, this.user);
     }
 
     public String log() {

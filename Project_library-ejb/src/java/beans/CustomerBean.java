@@ -15,8 +15,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.ejb.StatefulTimeout;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.ObjectMessage;
+import javax.jms.Queue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -30,6 +36,11 @@ import javax.persistence.TypedQuery;
 @Stateful
 @StatefulTimeout(unit = TimeUnit.MINUTES, value = 15)
 public class CustomerBean implements CustomerBeanLocal {
+    @Resource(mappedName = "jms/bookQueue")
+    private Queue bookQueue;
+    @Inject
+    @JMSConnectionFactory("jms/bookQueueFactory")
+    private JMSContext context;
 
     private List<LibraryItem> cart;
     @PersistenceContext(unitName = "lPU")
@@ -184,15 +195,17 @@ public class CustomerBean implements CustomerBeanLocal {
         return s;
     }
     
+    @Override
     public void sendQuestion(String question, String user){
-        TypedQuery<Users> query;
-        Users us;
-        query=em.createQuery("SELECT u FROM Users u WHERE u.name = :param", Users.class);
-        us = query.setParameter("param", user).getSingleResult();
+        QuestionItem q = new QuestionItem(question, user);
         
-        QuestionItem q= new QuestionItem(question, us.getMail());
-        
+        ObjectMessage o = context.createObjectMessage(q);
+        sendJMSMessageToBookQueue(o);
     
+    }
+
+    private void sendJMSMessageToBookQueue(ObjectMessage messageData) {
+        context.createProducer().send(bookQueue, messageData);
     }
   
     

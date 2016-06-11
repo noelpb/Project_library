@@ -34,4 +34,6 @@ public interface CustomerBeanLocal {
     List<WaitingListItem> getAllMyWishlists(String user);
 
     String getBooksFromOrder(String id);
+
+    public void sendQuestion(String question, String user);
 }
