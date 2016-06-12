@@ -168,6 +168,7 @@ public class customerBB implements Serializable {
     
     public void sendQuestion(){
         customerBean.sendQuestion(this.question, this.user);
+        this.question = "";
     }
 
     public String log() {

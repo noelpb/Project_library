@@ -47,10 +47,8 @@ public class QuestionManageBean {
     }
     
     public void sendReply() throws MessagingException{
-        System.out.println("in Send Reply");
-        System.out.println(staffSesBean.getOneQuestion());
-        System.out.println(response);
         staffSesBean.answerQuestion(staffSesBean.getOneQuestion(), response);
+        this.response = "";
     }
     
 }
