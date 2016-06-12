@@ -147,8 +147,11 @@
             <br/>
              Hi <%=userName%>, Login successful. Your Session ID=<%=sessionID%>
             <hr/>
+            <a href="./questions.xhtml">Customer Questions</a>
+            <br/>
             <a href="./index.html">Back HOME</a>
             <br/>
+            
             <em>Leuven Group-T Library</em></div>
     </body>
 </html>

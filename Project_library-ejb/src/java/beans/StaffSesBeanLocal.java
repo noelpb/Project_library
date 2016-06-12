@@ -6,8 +6,10 @@
 package beans;
 
 import entities.Genre;
+import entities.QuestionItem;
 import java.util.Date;
 import javax.ejb.Local;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -27,4 +29,10 @@ public interface StaffSesBeanLocal {
     boolean deleteUser(String mail);
 
     boolean checkDirector(String usermail);
+
+    public QuestionItem getOneQuestion();
+
+    public void answerQuestion(QuestionItem q, String answer) throws MessagingException;
+
+    public void sendMail(String mail, String text) throws MessagingException;
 }

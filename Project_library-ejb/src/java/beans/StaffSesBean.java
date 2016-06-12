@@ -13,7 +13,17 @@ import entities.Orders;
 import entities.QuestionItem;
 import entities.Users;
 import java.util.Date;
+import java.util.Properties;
 import javax.ejb.Stateless;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -154,5 +164,88 @@ public class StaffSesBean implements StaffSesBeanLocal {
         }
     }
     
-  
+    @Override
+    public QuestionItem getOneQuestion(){
+        QuestionItem q;
+        try {
+            TypedQuery<QuestionItem> query = em.createQuery("SELECT q FROM QuestionItem q", QuestionItem.class);
+            query.setFirstResult(0);
+            query.setMaxResults(1);
+            q = query.getSingleResult();
+            return q;
+         } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public void answerQuestion(QuestionItem q, String answer) throws MessagingException{
+        sendMail(q.getMail(), answer);
+        System.out.println(q.getMail());
+        TypedQuery<QuestionItem> query;
+        QuestionItem i = null;
+        boolean res;
+        try {
+            query = em.createQuery("SELECT l FROM QuestionItem  l WHERE l.id = :name", QuestionItem.class);
+            Long id = q.getId();
+            i = query.setParameter("name", id).getSingleResult();
+            em.remove(i);
+            res = true;
+        } catch (NoResultException e) {
+            res = false;
+        }
+      
+        
+    }
+    @Override
+    public void sendMail(String mail, String text) throws MessagingException {
+        String d_email = "matousmejem@seznam.cz",
+                d_uname = "matousmejem@seznam.cz",
+                d_password = "Palec5529",
+                d_host = "smtp.seznam.cz",
+                d_port = "465",
+                m_to = mail,
+                m_subject = "Group T library ",
+                m_text = text;
+        Properties props = new Properties();
+        props.put("mail.smtp.user", d_email);
+        props.put("mail.smtp.host", d_host);
+        props.put("mail.smtp.port", d_port);
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.debug", "true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.socketFactory.port", d_port);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+
+        Authenticator auth = new SMTPAuthenticator();
+        Session session = Session.getInstance(props, auth);
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            msg.setSubject(m_subject);
+            msg.setText(m_text);
+            msg.setFrom(new InternetAddress(d_email));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(m_to));
+            Transport transport = session.getTransport("smtps");
+            transport.connect(d_host, Integer.valueOf(d_port), d_uname, d_password);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
+        } catch (AddressException e) {
+            e.printStackTrace();
+            System.out.println("error address");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            System.out.println("error Messaging");
+        }
+    }
+
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
+
+        @Override
+        public PasswordAuthentication getPasswordAuthentication() {
+            String username = "matousmejem@seznam.cz";
+            String password = "Palec5529";
+            return new PasswordAuthentication(username, password);
+        }
+    }
 }
