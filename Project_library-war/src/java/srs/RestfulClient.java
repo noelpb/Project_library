@@ -1,4 +1,4 @@
-package sss;
+package srs;
 
 
 import javax.ws.rs.GET;

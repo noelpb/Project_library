@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,6 +30,7 @@ import javax.persistence.OneToOne;
     @NamedQuery(name = "countLibItems", query = "SELECT COUNT(b) FROM LibraryItem b"),
     @NamedQuery(name = "selectAll", query = "SELECT l FROM LibraryItem AS l")
 })
+@XmlRootElement
 public class LibraryItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -105,6 +108,7 @@ public class LibraryItem implements Serializable {
         this.bookISBN = bookISBN;
     }
 
+    @XmlTransient
     public List<Orders> getOrders() {
         return orders;
     }
@@ -135,7 +139,7 @@ public class LibraryItem implements Serializable {
 
     @Override
     public String toString() {
-        return id + ";" + count + ";" + availability + ";" + bookISBN.getName() + ";" + bookISBN.getName() + ";" + bookISBN.getGenre();
+         return "{\"Id\":\""+ id + "\", \"count\":\"" + count + ", \"available\":\"" + availability + "\", \"Title\":\"" + bookISBN.getName() + "\", \"Author\":\"" + bookISBN.writersToString()+ "\", \"genre\":\"" + bookISBN.getGenre()+"\"}\n";
     }
 
 }
