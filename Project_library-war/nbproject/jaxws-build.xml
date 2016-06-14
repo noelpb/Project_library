@@ -53,7 +53,7 @@
     </target>
     <target name="wsimport-client-GetBooks" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/GetBooks"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/GetBooks" destdir="${build.generated.dir}/jax-wsCache/GetBooks" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/GetBooks/wsdl/localhost_8080/Project_library-war/GetBooks.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/Project_library-war/GetBooks?wsdl" xnocompile="true" xendorsed="true" package="Clients">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/GetBooks" destdir="${build.generated.dir}/jax-wsCache/GetBooks" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/GetBooks/wsdl/localhost_8080/Project_library-war/GetBooks.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/Project_library-war/GetBooks?wsdl" xnocompile="true" xendorsed="true" package="Client">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/GetBooks/wsdl/localhost_8080/Project_library-war/GetBooks.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/GetBooks"/>
         </wsimport>
@@ -64,24 +64,8 @@
         </copy>
     </target>
     <target name="wsimport-client-clean-GetBooks" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/Clients"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/Client"/>
         <delete dir="${build.generated.dir}/jax-wsCache/GetBooks"/>
     </target>
-    <target name="wsimport-client-GetBooks_1" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/GetBooks_1"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/GetBooks_1" destdir="${build.generated.dir}/jax-wsCache/GetBooks_1" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/GetBooks_1/wsdl/localhost_8080/Project_library-war/GetBooks.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/Project_library-war/GetBooks?wsdl" xnocompile="true" xendorsed="true" package="Client">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/GetBooks_1/wsdl/localhost_8080/Project_library-war/GetBooks.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/GetBooks_1"/>
-        </wsimport>
-        <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/GetBooks_1">
-                <include name="**/*.java"/>
-            </fileset>
-        </copy>
-    </target>
-    <target name="wsimport-client-clean-GetBooks_1" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/Client"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/GetBooks_1"/>
-    </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-GetBooks, wsimport-client-GetBooks_1"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-GetBooks"/>
 </project>

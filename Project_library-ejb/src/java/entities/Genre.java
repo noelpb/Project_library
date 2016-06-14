@@ -9,6 +9,7 @@ package entities;
  *
  * @author Nudista
  */
+
 public enum Genre {
 COMEDY,
 DRAMA,

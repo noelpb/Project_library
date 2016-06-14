@@ -14,6 +14,7 @@ import entities.QuestionItem;
 import entities.Users;
 import java.util.Date;
 import java.util.Properties;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -34,7 +35,7 @@ import javax.persistence.TypedQuery;
  *
  * @author Nudista
  */
-@Stateless
+@Stateful
 public class StaffSesBean implements StaffSesBeanLocal {
 
     private AuthorItem a;

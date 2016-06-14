@@ -19,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -27,6 +29,7 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "countBooks", query = "SELECT COUNT(b) FROM BookItem b")})
+@XmlRootElement
 public class BookItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,11 +58,11 @@ public class BookItem implements Serializable {
         this.writer = new ArrayList<>();
     }
 
+    @XmlTransient
     public List<AuthorItem> getWriter() {
         return writer;
     }
-    
-     
+
     public void setWriter(List<AuthorItem> writer) {
         this.writer = writer;
     }
@@ -107,7 +110,11 @@ public class BookItem implements Serializable {
     public String writersToString() {
         String result = "";
         for (AuthorItem authorItem : writer) {
-            result = result + ";" + authorItem.getName();
+            if (result.isEmpty()) {
+                result = authorItem.getName();
+            } else {
+                result = result + ";" + authorItem.getName();
+            }
         }
         return result;
     }
@@ -134,7 +141,7 @@ public class BookItem implements Serializable {
 
     @Override
     public String toString() {
-        return "book.BookItem[ id=" + name + " ]";
+        return "book.BookItem id=" + name;
     }
 
 }

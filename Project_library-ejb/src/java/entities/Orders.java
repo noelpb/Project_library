@@ -31,7 +31,7 @@ import javax.persistence.Temporal;
 @NamedQueries({
     @NamedQuery(name = "countOrders", query = "SELECT COUNT(b) FROM Orders b")})
 public class Orders implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,7 +58,7 @@ public class Orders implements Serializable {
         this.user = user;
         this.libItem = libItem;
         startDate = new Date();
-        endDate = this.addDays(startDate, 0);
+        endDate = this.addDays(startDate, 7);
         openOrder = true;
     }
 
@@ -66,7 +66,7 @@ public class Orders implements Serializable {
         this.user = user;
         this.libItem = new ArrayList<>();
         startDate = new Date();
-        endDate = this.addDays(startDate, 0);
+        endDate = this.addDays(startDate, 7);
         openOrder = true;
     }
 
